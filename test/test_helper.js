@@ -7,3 +7,9 @@ mongoose.connect("mongodb://127.0.0.1/users_test", {
 mongoose.connection
   .once("open", () => console.log("Good to go"))
   .on("error", error => console.log("Error", error));
+
+beforeEach(done => {
+  mongoose.connection.collections.users.drop(() => {
+    done();
+  });
+});
