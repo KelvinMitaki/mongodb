@@ -12,4 +12,9 @@ describe("finding users from the database", () => {
     console.log(users);
     assert(brayo._id.toString() === users[0]._id.toString());
   });
+  it("find a user with a particular id", async () => {
+    const user = await User.findOne({ _id: brayo._id });
+    console.log(user);
+    assert(user.name === "Brayo");
+  });
 });
