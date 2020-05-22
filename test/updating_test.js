@@ -4,7 +4,7 @@ const User = require("../src/models/users");
 describe("Updating users", () => {
   let brayo;
   beforeEach(async () => {
-    brayo = new User({ name: "Brayo", postCount: 0 });
+    brayo = new User({ name: "Brayo", likes: 0 });
     await brayo.save();
   });
 
@@ -37,9 +37,9 @@ describe("Updating users", () => {
   it("a model class of finding by ID and updating", async () => {
     await assertName(User.findByIdAndUpdate(brayo._id, { name: "Kevoh" }));
   });
-  it("Incrementing a users postCount by one", async () => {
-    await User.findOneAndUpdate({ name: "Brayo" }, { $inc: { postCount: 1 } });
+  it("Incrementing a users likes by one", async () => {
+    await User.findOneAndUpdate({ name: "Brayo" }, { $inc: { likes: 1 } });
     const user = await User.findOne({ name: "Brayo" });
-    assert(user.postCount === 1);
+    assert(user.likes === 1);
   });
 });
