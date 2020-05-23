@@ -23,7 +23,13 @@ const UserSchema = new Schema({
 });
 
 UserSchema.virtual("postCount").get(function () {
-  console.log(this);
+  return this.posts.length;
+});
+
+UserSchema.pre("save", async function (next) {
+  const BlogPost = mongoose.model("BlogPost");
+  await BlogPost.deleteMany({ _id: { $in: this.blogPosts } });
+  next();
 });
 
 const User = mongoose.model("User", UserSchema);
