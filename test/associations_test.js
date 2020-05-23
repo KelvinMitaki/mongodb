@@ -21,9 +21,25 @@ describe("associations", () => {
       await comment.save()
     ]);
   });
-  it.only("saves a relation between a user and a blogpost", async () => {
+  it("saves a relation between a user and a blogpost", async () => {
     const user = await User.findOne({ name: "Brayo" }).populate("blogPosts");
-    console.log(user.blogPosts);
     assert(user.blogPosts[0].title === "JavaScript");
+  });
+  it("Saves a full relational tree", async () => {
+    const user = await User.findOne({ name: "Brayo" }).populate({
+      path: "blogPosts",
+      populate: {
+        path: "comments",
+        model: "Comment",
+        populate: {
+          path: "user",
+          model: "User"
+        }
+      }
+    });
+    assert(user.name === "Brayo");
+    assert(user.blogPosts[0].title === "JavaScript");
+    assert(user.blogPosts[0].comments[0].content === "This is a new comment");
+    assert(user.blogPosts[0].comments[0].user.name === "Brayo");
   });
 });
