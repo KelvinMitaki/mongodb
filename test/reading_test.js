@@ -9,12 +9,12 @@ describe("finding users from the database", () => {
   });
   it("finds a user with the name brayo", async () => {
     const users = await User.find({ name: "Brayo" });
-    console.log(users);
+
     assert(brayo._id.toString() === users[0]._id.toString());
   });
   it("find a user with a particular id", async () => {
     const user = await User.findOne({ _id: brayo._id });
-    console.log(user);
+
     assert(user.name === "Brayo");
   });
 });

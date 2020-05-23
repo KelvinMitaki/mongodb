@@ -15,5 +15,15 @@ describe("associations", () => {
     blogPost.comments.push(comment);
     brayo.blogPosts.push(blogPost);
     comment.user = brayo;
+    Promise.all([
+      await brayo.save(),
+      await blogPost.save(),
+      await comment.save()
+    ]);
+  });
+  it.only("saves a relation between a user and a blogpost", async () => {
+    const user = await User.findOne({ name: "Brayo" }).populate("blogPosts");
+    console.log(user.blogPosts);
+    assert(user.blogPosts[0].title === "JavaScript");
   });
 });
