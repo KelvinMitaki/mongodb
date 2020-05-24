@@ -23,6 +23,7 @@ describe("associations", () => {
   });
   it("saves a relation between a user and a blogpost", async () => {
     const user = await User.findOne({ name: "Brayo" }).populate("blogPosts");
+
     assert(user.blogPosts[0].title === "JavaScript");
   });
   it("Saves a full relational tree", async () => {
